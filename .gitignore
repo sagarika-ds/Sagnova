@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Log files
+*.log
+server.log
+
+# Cache files
+cache.json
+
+# macOS
+.DS_Store
