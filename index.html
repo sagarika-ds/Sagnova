@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Horizon — Your World, Curated</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --text: #f4f2ee;
+      --muted: rgba(244, 242, 238, 0.65);
+      --glass: rgba(20, 18, 25, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --accent: #d9b968;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ---------------- HERO / LANDING VIEW ---------------- */
+    #heroView {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(180deg, rgba(5, 8, 20, 0.25) 0%, rgba(5, 8, 20, 0.55) 60%, rgba(5, 8, 20, 0.8) 100%),
+        url('Sg.jpg') center/cover no-repeat,
+        linear-gradient(160deg, #060912 0%, #0b1330 35%, #1a2550 65%, #060912 100%);
+      background-blend-mode: normal;
+      padding: 40px 5vw;
+    }
+
+    #heroView>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* Left: greeting / clock */
+    .greet-block {
+      max-width: 1480px;
+    }
+
+    .greet-eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .greet-title {
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 14px;
+    }
+
+    .greet-sub {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 22px;
+    }
+
+    .clock-row {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .clock-item {}
+
+    .clock-num {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .clock-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Right: glass topic panel */
+    .topic-panel {
+      background: rgba(15, 14, 22, 0.35);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 26px;
+      padding: 26px;
+      width: min(440px, 100%);
+      box-shadow:
+        0 40px 80px -24px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .topic-panel h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 2px 6px 2px 2px;
+    }
+
+    .topic-grid::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .topic-grid::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+    }
+
+    .topic-btn {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text);
+      padding: 13px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .topic-btn span:first-child {
+      font-size: 16px;
+    }
+
+    .topic-btn:hover {
+      background: rgba(217, 185, 104, 0.16);
+      border-color: var(--accent);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 24px -8px rgba(217, 185, 104, 0.35);
+    }
+
+    .all-btn {
+      margin-top: 14px;
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #b5883f);
+      color: #12100a;
+      font-weight: 700;
+      border: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 14.5px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      box-shadow: 0 14px 28px -10px rgba(217, 185, 104, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .all-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Bottom hero tagline */
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .scroll-hint {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ---------------- CATEGORY VIEW ---------------- */
+    #categoryView {
+      display: none;
+      min-height: 100vh;
+      padding: 32px 5vw 100px;
+      position: relative;
+    }
+
+    #categoryView.active {
+      display: block;
+    }
+
+    #heroView.hidden {
+      display: none;
+    }
+
+    .cat-bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      transition: background 0.6s ease;
+    }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .cat-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+    }
+
+    .cat-title .emoji {
+      margin-right: 10px;
+    }
+
+    .status {
+      color: var(--muted);
+      text-align: center;
+      padding: 60px 0;
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(15, 14, 20, 0.4);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 20px;
+      padding: 22px;
+      transform-style: preserve-3d;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:hover {
+      transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+      border-color: var(--accent);
+    }
+
+    .src {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .summary {
+      color: rgba(244, 242, 238, 0.85);
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+
+    .why {
+      color: var(--muted);
+      font-size: 12.5px;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+
+    .scores {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .score {
+      font-size: 10.5px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .read-link {
+      font-size: 12.5px;
+      color: #12100a;
+      background: var(--accent);
+      padding: 7px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .google-link {
+      font-size: 12.5px;
+      color: var(--muted);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 7px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .name-input-row {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      z-index: 5;
+    }
+
+    .name-input-row input {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============ HERO / LANDING ============ -->
+  <div id="heroView">
+    <div class="top-row">
+      <div class="greet-block">
+        <div class="greet-eyebrow">Your world, this morning</div>
+        <div class="greet-title serif" id="greeting">Good Evening, Sagarika</div>
+        <div class="greet-sub" id="dateline"></div>
+        <div class="clock-row">
+          <div class="clock-item">
+            <div class="clock-num" id="clockHours">00</div>
+            <div class="clock-label">Hours</div>
+          </div>
+          <div class="clock-item">
+            <div class="clock-num" id="clockMins">00</div>
+            <div class="clock-label">Minutes</div>
+          </div>
+          <div class="clock-item">
+            <div class="clock-num" id="clockDay">—</div>
+            <div class="clock-label">Day</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-panel">
+        <h3> Choose a world to explore</h3>
+        <div class="topic-grid" id="topicGrid">
+          <div class="status" style="grid-column:1/-1;padding:20px 0;">Loading topics…</div>
+        </div>
+        <button class="all-btn" id="allTrendingBtn">Trending</button>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="brand">Horizon<span>.</span></div>
+      <div class="scroll-hint">Click any topic to begin </div>
+    </div>
+  </div>
+
+  <!-- ============ CATEGORY / TOPIC PAGE ============ -->
+  <div id="categoryView">
+    <div class="cat-bg-layer" id="catBgLayer"></div>
+    <div class="cat-header">
+      <button class="back-btn" id="backBtn">← Back to Sags News</button>
+      <div class="cat-title"><span class="emoji" id="catEmoji">📰</span><span id="catName">Topic</span></div>
+    </div>
+    <div id="content">
+      <div class="status">Loading…</div>
+    </div>
+  </div>
+
+  <div class="name-input-row">
+    <input id="nameInput" placeholder="Your name" value="Sagarika" />
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:8001";
+    let CATEGORIES = [];
+
+    // Unique gradient "world" per category — swap any of these for a real photo URL
+    // by changing the value to: "url('yourphoto.jpg') center/cover"
+    const CATEGORY_THEMES = {
+      "AI": "radial-gradient(circle at 20% 20%, #1a0b2e, transparent 50%), linear-gradient(160deg,#05010f,#1c0b3d,#3a0f5c)",
+      "Tech": "radial-gradient(circle at 80% 10%, #0a2540, transparent 50%), linear-gradient(160deg,#020a14,#0b2340,#123a5e)",
+      "Finance": "radial-gradient(circle at 30% 10%, #1e2a0a, transparent 50%), linear-gradient(160deg,#080d02,#1e2a0a,#2f4210)",
+      "World": "radial-gradient(circle at 60% 20%, #0a2e3a, transparent 50%), linear-gradient(160deg,#020a0d,#0a2e3a,#12495c)",
+      "India": "radial-gradient(circle at 40% 15%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170601,#3d1a0a,#5c3312)",
+      "Sports": "radial-gradient(circle at 25% 15%, #0a3d1e, transparent 50%), linear-gradient(160deg,#01170a,#0a3d1e,#0f5c2e)",
+      "Entertainment": "radial-gradient(circle at 70% 15%, #3d0a2e, transparent 50%), linear-gradient(160deg,#17011a,#3d0a2e,#5c1049)",
+      "Science": "radial-gradient(circle at 50% 10%, #0a2e3d, transparent 50%), linear-gradient(160deg,#010a17,#0a2e3d,#125c68)",
+      "Space": "radial-gradient(circle at 30% 20%, #060025, transparent 50%), linear-gradient(160deg,#000005,#0a0a2e,#1a0b45)",
+      "Health": "radial-gradient(circle at 60% 15%, #0a3d33, transparent 50%), linear-gradient(160deg,#011712,#0a3d33,#125c4f)",
+      "Cybersecurity": "radial-gradient(circle at 40% 10%, #2e0a0a, transparent 50%), linear-gradient(160deg,#170101,#2e0a0a,#5c1212)",
+      "Startups": "radial-gradient(circle at 55% 15%, #3d260a, transparent 50%), linear-gradient(160deg,#170e01,#3d260a,#5c3c12)",
+      "Programming": "radial-gradient(circle at 35% 15%, #0a1a3d, transparent 50%), linear-gradient(160deg,#01051a,#0a1a3d,#122c5c)",
+      "Career": "radial-gradient(circle at 45% 10%, #3d0a1e, transparent 50%), linear-gradient(160deg,#17010c,#3d0a1e,#5c1230)",
+      "K-Pop": "radial-gradient(circle at 60% 15%, #4a0a3d, transparent 50%), linear-gradient(160deg,#1a0117,#4a0a3d,#6e125c)",
+      "Music": "radial-gradient(circle at 30% 10%, #3d0a2e, transparent 50%), linear-gradient(160deg,#170112,#3d0a2e,#5c1049)",
+      "Dance": "radial-gradient(circle at 50% 20%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170a01,#3d1a0a,#5c3312)",
+      "Pop Culture": "radial-gradient(circle at 65% 15%, #3d0a3d, transparent 50%), linear-gradient(160deg,#170117,#3d0a3d,#5c125c)",
+      "Awards Shows": "radial-gradient(circle at 40% 10%, #3d2e0a, transparent 50%), linear-gradient(160deg,#171201,#3d2e0a,#5c4712)",
+      "Intl Travel": "radial-gradient(circle at 30% 15%, #0a2e3d, transparent 50%), linear-gradient(160deg,#010c17,#0a2e3d,#125c78)",
+      "India Travel": "radial-gradient(circle at 50% 15%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170a01,#3d1a0a,#78380f)",
+      "Mountains": "radial-gradient(circle at 40% 10%, #1a2540, transparent 50%), linear-gradient(160deg,#04060f,#0e1830,#1a2550)",
+      "Beaches": "radial-gradient(circle at 55% 15%, #0a3d4a, transparent 50%), linear-gradient(160deg,#011217,#0a3d4a,#0f6e78)",
+    };
+
+    function pad(n) { return n.toString().padStart(2, "0"); }
+
+    function tickClock() {
+      const now = new Date();
+      const hour = now.getHours();
+      let greetWord = "Good Evening";
+      if (hour < 12) greetWord = "Good Morning";
+      else if (hour < 17) greetWord = "Good Afternoon";
+      const name = document.getElementById("nameInput").value || "there";
+      document.getElementById("greeting").textContent = `${greetWord}, ${name}`;
+      document.getElementById("dateline").textContent = now.toLocaleDateString(undefined, {
+        weekday: "long", year: "numeric", month: "long", day: "numeric"
+      });
+      document.getElementById("clockHours").textContent = pad(now.getHours() % 12 || 12);
+      document.getElementById("clockMins").textContent = pad(now.getMinutes());
+      document.getElementById("clockDay").textContent = now.toLocaleDateString(undefined, { weekday: "short" });
+    }
+    setInterval(tickClock, 1000);
+    tickClock();
+
+    async function loadCategories() {
+      try {
+        const res = await fetch(`${API_BASE}/categories`);
+        CATEGORIES = await res.json();
+        const grid = document.getElementById("topicGrid");
+        grid.innerHTML = "";
+        CATEGORIES.forEach(c => {
+          const btn = document.createElement("button");
+          btn.className = "topic-btn";
+          btn.innerHTML = `<span>${c.emoji}</span><span>${c.name}</span>`;
+          btn.onclick = () => openCategory(c.name, c.emoji);
+          grid.appendChild(btn);
+        });
+      } catch (err) {
+        document.getElementById("topicGrid").innerHTML =
+          `<div class="status" style="grid-column:1/-1;">⚠️ Can't reach backend on 8001</div>`;
+      }
+    }
+
+    document.getElementById("allTrendingBtn").onclick = () => openCategory(null, "🌐", "Everything Trending");
+    document.getElementById("backBtn").onclick = () => {
+      document.getElementById("categoryView").classList.remove("active");
+      document.getElementById("heroView").classList.remove("hidden");
+      window.scrollTo(0, 0);
+    };
+
+    async function openCategory(name, emoji, displayName) {
+      document.getElementById("heroView").classList.add("hidden");
+      document.getElementById("categoryView").classList.add("active");
+      document.getElementById("catEmoji").textContent = emoji;
+      document.getElementById("catName").textContent = displayName || name;
+      window.scrollTo(0, 0);
+
+      const theme = name ? (CATEGORY_THEMES[name] || CATEGORY_THEMES["World"])
+        : "linear-gradient(160deg,#060912,#0b1330,#1a2550)";
+      document.getElementById("catBgLayer").style.background = theme;
+
+      const content = document.getElementById("content");
+      content.innerHTML = '<div class="status">Fetching and summarizing news…</div>';
+
+      const name_ = document.getElementById("nameInput").value || "there";
+      const categories = name ? name : CATEGORIES.map(c => c.name).join(",");
+
+      try {
+        const res = await fetch(`${API_BASE}/briefing?name=${encodeURIComponent(name_)}&categories=${encodeURIComponent(categories)}`);
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        const data = await res.json();
+        renderStories(data.stories);
+      } catch (err) {
+        content.innerHTML = `<div class="status">⚠️ ${err.message}. Is the backend running on port 8001?</div>`;
+      }
+    }
+
+    function renderStories(stories) {
+      const content = document.getElementById("content");
+      if (!stories.length) {
+        content.innerHTML = '<div class="status">No stories found for this world right now — try another.</div>';
+        return;
+      }
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      stories.forEach((s, idx) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const googleQuery = encodeURIComponent(s.headline);
+        card.innerHTML = `
+      <div class="src">${s.source_name || ""}</div>
+      <div class="headline">${s.headline}</div>
+      <div class="summary">${s.summary}</div>
+      <div class="why">Why it matters: ${s.why_it_matters}</div>
+      <div class="scores">
+        <span class="score">⭐ ${s.importance}/10</span>
+        <span class="score">🇮🇳 ${s.india_impact}/10</span>
+        <span class="score">💼 ${s.career_relevance}/10</span>
+        <span class="score">💰 ${s.financial_impact}/10</span>
+        <span class="score">🤖 ${s.ai_relevance}/10</span>
+      </div>
+      <div class="actions">
+        ${s.source_url ? `<a class="read-link" href="${s.source_url}" target="_blank" rel="noopener">Read Article →</a>` : ""}
+        <a class="google-link" href="https://news.google.com/search?q=${googleQuery}" target="_blank" rel="noopener">More on Google News</a>
+      </div>
+    `;
+        grid.appendChild(card);
+      });
+      content.innerHTML = "";
+      content.appendChild(grid);
+    }
+
+    document.getElementById("nameInput").addEventListener("input", tickClock);
+    loadCategories();
+  </script>
+</body>
+
+</html>
