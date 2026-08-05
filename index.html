@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Horizon — Your World, Curated</title>
+  <title>Sags News — Your World, Curated</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
@@ -61,15 +61,39 @@
 
     .top-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: flex-start;
       gap: 24px;
       flex-wrap: wrap;
+      position: relative;
+      min-height: 30vh;
     }
 
     /* Left: greeting / clock */
     .greet-block {
-      max-width: 1480px;
+      max-width: 560px;
+      position: absolute;
+      top: calc(8vh - 1cm);
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .greet-title {
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 14px;
+      background: linear-gradient(180deg, #e2bdbd 0%, #dbac3f 60%, #e3c371 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.01em;
+    }
+
+    .clock-row {
+      justify-content: center;
     }
 
     .greet-eyebrow {
@@ -116,95 +140,115 @@
 
     /* Right: glass topic panel */
     .topic-panel {
-      background: rgba(15, 14, 22, 0.35);
-      backdrop-filter: blur(24px) saturate(160%);
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 26px;
-      padding: 26px;
-      width: min(440px, 100%);
-      box-shadow:
-        0 40px 80px -24px rgba(0, 0, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      width: min(280px, 100%);
+      margin-right: 0;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
 
     .topic-panel h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 19px;
-      font-weight: 600;
-      margin-bottom: 16px;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #fff;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
     }
 
     .topic-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      max-height: 60vh;
-      overflow-y: auto;
-      padding: 2px 6px 2px 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+      max-height: none;
+      overflow: visible;
+      padding: 0;
     }
 
-    .topic-grid::-webkit-scrollbar {
-      width: 5px;
-    }
+    @keyframes floaty {
 
-    .topic-grid::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-5px);
+      }
     }
 
     .topic-btn {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: var(--text);
-      padding: 13px 12px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 500;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.9);
+      padding: 3px 2px;
+      border-radius: 0;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Playfair Display', serif;
       cursor: pointer;
-      text-align: left;
       display: flex;
       align-items: center;
-      gap: 9px;
-      transition: all 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      gap: 8px;
+      justify-content: flex-end;
+      text-align: right;
+      transition: all 0.2s ease;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.75), 0 0 26px rgba(0, 0, 0, 0.45);
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    .topic-btn:nth-child(2n) {
+      animation-delay: -1.6s;
+    }
+
+    .topic-btn:nth-child(3n) {
+      animation-delay: -3.1s;
     }
 
     .topic-btn span:first-child {
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .topic-btn:hover {
-      background: rgba(217, 185, 104, 0.16);
-      border-color: var(--accent);
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 12px 24px -8px rgba(217, 185, 104, 0.35);
+      color: var(--accent);
+      transform: translateX(-8px) scale(1.06);
+      text-shadow: 0 2px 18px rgba(217, 185, 104, 0.8);
+      animation-play-state: paused;
     }
 
     .all-btn {
-      margin-top: 14px;
-      width: 100%;
-      background: linear-gradient(135deg, var(--accent), #b5883f);
-      color: #12100a;
+      margin-top: 16px;
+      background: rgba(217, 185, 104, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--accent);
       font-weight: 700;
-      border: none;
-      padding: 14px;
-      border-radius: 14px;
-      font-size: 14.5px;
+      border: 1px solid rgba(217, 185, 104, 0.5);
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 13px;
       cursor: pointer;
-      letter-spacing: 0.02em;
-      box-shadow: 0 14px 28px -10px rgba(217, 185, 104, 0.5);
-      transition: transform 0.2s ease;
+      letter-spacing: 0.04em;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .all-btn:hover {
       transform: translateY(-2px);
+      background: rgba(217, 185, 104, 0.22);
     }
 
     /* Bottom hero tagline */
@@ -228,10 +272,57 @@
     }
 
     .scroll-hint {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.1em;
+      display: none;
+    }
+
+    @keyframes sparklePulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px 4px rgba(217, 185, 104, 0.35), inset 0 0 12px rgba(255, 255, 255, 0.15);
+      }
+
+      50% {
+        box-shadow: 0 0 34px 10px rgba(217, 185, 104, 0.55), inset 0 0 18px rgba(255, 255, 255, 0.3);
+      }
+    }
+
+    @keyframes sparkleSpin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .sparkle-bubble {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), rgba(217, 185, 104, 0.12) 60%, rgba(20, 18, 25, 0.4));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 10px 20px 10px 14px;
+      cursor: default;
+      animation: sparklePulse 2.6s ease-in-out infinite;
+    }
+
+    .sparkle-bubble .sparkle-icon {
+      display: inline-block;
+      animation: sparkleSpin 6s linear infinite;
+      font-size: 18px;
+    }
+
+    .sparkle-bubble .sparkle-text {
+      font-size: 12.5px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
     /* ---------------- CATEGORY VIEW ---------------- */
@@ -252,9 +343,67 @@
 
     .cat-bg-layer {
       position: fixed;
-      inset: 0;
+      inset: -20px;
       z-index: -1;
-      transition: background 0.6s ease;
+      background:
+        linear-gradient(180deg, rgba(5, 8, 20, 0.55) 0%, rgba(5, 8, 20, 0.75) 100%),
+        url('Sg.jpg') center/cover no-repeat;
+      filter: blur(22px) brightness(0.6) saturate(1.1);
+      transform: scale(1.08);
+      /* avoids blurred edges peeking in */
+    }
+
+    /* ---------------- GAME-STYLE TOPIC BURST TRANSITION ---------------- */
+    .burst-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 9, 18, 0);
+      pointer-events: none;
+      transition: background 0.35s ease;
+    }
+
+    .burst-overlay.burst-grow {
+      background: rgba(6, 9, 18, 0.7);
+    }
+
+    .burst-text {
+      font-size: clamp(22px, 4.2vw, 46px);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(217, 185, 104, 0.6);
+      transform: scale(0.3);
+      opacity: 0;
+      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.4s ease;
+      text-align: center;
+      line-height: 1.4;
+      padding: 0 5vw;
+    }
+
+    .burst-line-2 {
+      font-size: 0.55em;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 6px;
+    }
+
+    .burst-overlay.burst-grow .burst-text {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .burst-overlay.burst-explode .burst-text {
+      transform: scale(2.6);
+      opacity: 0;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 1, 1), opacity 0.5s ease;
+    }
+
+    .burst-overlay.burst-explode {
+      background: rgba(6, 9, 18, 0);
+      transition: background 0.5s ease 0.1s;
     }
 
     .cat-header {
@@ -404,6 +553,39 @@
       font-size: 12px;
       backdrop-filter: blur(8px);
     }
+
+    /* Custom sparkle cursor */
+    body {
+      cursor: none;
+    }
+
+    #sparkleCursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 26px;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      filter: drop-shadow(0 0 6px rgba(217, 185, 104, 0.9)) drop-shadow(0 0 14px rgba(217, 185, 104, 0.5));
+      animation: sparkleSpin 5s linear infinite;
+      transition: transform 0.06s linear;
+    }
+
+    #sparkleCursor.clicking {
+      transform: translate(-50%, -50%) scale(0.7);
+    }
+
+    a,
+    button,
+    .topic-btn {
+      cursor: none;
+    }
   </style>
 </head>
 
@@ -437,13 +619,17 @@
         <div class="topic-grid" id="topicGrid">
           <div class="status" style="grid-column:1/-1;padding:20px 0;">Loading topics…</div>
         </div>
-        <button class="all-btn" id="allTrendingBtn">Trending</button>
+        <button class="all-btn" id="allTrendingBtn"> Trending</button>
       </div>
     </div>
 
     <div class="bottom-row">
-      <div class="brand">Horizon<span>.</span></div>
-      <div class="scroll-hint">Click any topic to begin </div>
+      <div class="brand">Sags News<span>.</span></div>
+      <div class="scroll-hint">Click any topic above to begin ↑</div>
+      <div class="sparkle-bubble">
+        <span class="sparkle-icon">✨</span>
+        <span class="sparkle-text">Tap a world to begin</span>
+      </div>
     </div>
   </div>
 
@@ -463,37 +649,11 @@
     <input id="nameInput" placeholder="Your name" value="Sagarika" />
   </div>
 
+  <div id="sparkleCursor">✨</div>
+
   <script>
     const API_BASE = "http://localhost:8001";
     let CATEGORIES = [];
-
-    // Unique gradient "world" per category — swap any of these for a real photo URL
-    // by changing the value to: "url('yourphoto.jpg') center/cover"
-    const CATEGORY_THEMES = {
-      "AI": "radial-gradient(circle at 20% 20%, #1a0b2e, transparent 50%), linear-gradient(160deg,#05010f,#1c0b3d,#3a0f5c)",
-      "Tech": "radial-gradient(circle at 80% 10%, #0a2540, transparent 50%), linear-gradient(160deg,#020a14,#0b2340,#123a5e)",
-      "Finance": "radial-gradient(circle at 30% 10%, #1e2a0a, transparent 50%), linear-gradient(160deg,#080d02,#1e2a0a,#2f4210)",
-      "World": "radial-gradient(circle at 60% 20%, #0a2e3a, transparent 50%), linear-gradient(160deg,#020a0d,#0a2e3a,#12495c)",
-      "India": "radial-gradient(circle at 40% 15%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170601,#3d1a0a,#5c3312)",
-      "Sports": "radial-gradient(circle at 25% 15%, #0a3d1e, transparent 50%), linear-gradient(160deg,#01170a,#0a3d1e,#0f5c2e)",
-      "Entertainment": "radial-gradient(circle at 70% 15%, #3d0a2e, transparent 50%), linear-gradient(160deg,#17011a,#3d0a2e,#5c1049)",
-      "Science": "radial-gradient(circle at 50% 10%, #0a2e3d, transparent 50%), linear-gradient(160deg,#010a17,#0a2e3d,#125c68)",
-      "Space": "radial-gradient(circle at 30% 20%, #060025, transparent 50%), linear-gradient(160deg,#000005,#0a0a2e,#1a0b45)",
-      "Health": "radial-gradient(circle at 60% 15%, #0a3d33, transparent 50%), linear-gradient(160deg,#011712,#0a3d33,#125c4f)",
-      "Cybersecurity": "radial-gradient(circle at 40% 10%, #2e0a0a, transparent 50%), linear-gradient(160deg,#170101,#2e0a0a,#5c1212)",
-      "Startups": "radial-gradient(circle at 55% 15%, #3d260a, transparent 50%), linear-gradient(160deg,#170e01,#3d260a,#5c3c12)",
-      "Programming": "radial-gradient(circle at 35% 15%, #0a1a3d, transparent 50%), linear-gradient(160deg,#01051a,#0a1a3d,#122c5c)",
-      "Career": "radial-gradient(circle at 45% 10%, #3d0a1e, transparent 50%), linear-gradient(160deg,#17010c,#3d0a1e,#5c1230)",
-      "K-Pop": "radial-gradient(circle at 60% 15%, #4a0a3d, transparent 50%), linear-gradient(160deg,#1a0117,#4a0a3d,#6e125c)",
-      "Music": "radial-gradient(circle at 30% 10%, #3d0a2e, transparent 50%), linear-gradient(160deg,#170112,#3d0a2e,#5c1049)",
-      "Dance": "radial-gradient(circle at 50% 20%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170a01,#3d1a0a,#5c3312)",
-      "Pop Culture": "radial-gradient(circle at 65% 15%, #3d0a3d, transparent 50%), linear-gradient(160deg,#170117,#3d0a3d,#5c125c)",
-      "Awards Shows": "radial-gradient(circle at 40% 10%, #3d2e0a, transparent 50%), linear-gradient(160deg,#171201,#3d2e0a,#5c4712)",
-      "Intl Travel": "radial-gradient(circle at 30% 15%, #0a2e3d, transparent 50%), linear-gradient(160deg,#010c17,#0a2e3d,#125c78)",
-      "India Travel": "radial-gradient(circle at 50% 15%, #3d1a0a, transparent 50%), linear-gradient(160deg,#170a01,#3d1a0a,#78380f)",
-      "Mountains": "radial-gradient(circle at 40% 10%, #1a2540, transparent 50%), linear-gradient(160deg,#04060f,#0e1830,#1a2550)",
-      "Beaches": "radial-gradient(circle at 55% 15%, #0a3d4a, transparent 50%), linear-gradient(160deg,#011217,#0a3d4a,#0f6e78)",
-    };
 
     function pad(n) { return n.toString().padStart(2, "0"); }
 
@@ -519,13 +679,14 @@
       try {
         const res = await fetch(`${API_BASE}/categories`);
         CATEGORIES = await res.json();
+        CATEGORIES.sort((a, b) => a.name.localeCompare(b.name)); // alphabetical order
         const grid = document.getElementById("topicGrid");
         grid.innerHTML = "";
         CATEGORIES.forEach(c => {
           const btn = document.createElement("button");
           btn.className = "topic-btn";
           btn.innerHTML = `<span>${c.emoji}</span><span>${c.name}</span>`;
-          btn.onclick = () => openCategory(c.name, c.emoji);
+          btn.onclick = () => burstIntoCategory(c.name, c.emoji, c.name);
           grid.appendChild(btn);
         });
       } catch (err) {
@@ -534,12 +695,37 @@
       }
     }
 
-    document.getElementById("allTrendingBtn").onclick = () => openCategory(null, "🌐", "Everything Trending");
+    document.getElementById("allTrendingBtn").onclick = () => burstIntoCategory(null, " ", "Everything Trending");
     document.getElementById("backBtn").onclick = () => {
       document.getElementById("categoryView").classList.remove("active");
       document.getElementById("heroView").classList.remove("hidden");
       window.scrollTo(0, 0);
     };
+
+    // Game-style transition: the topic name fills the screen, then bursts apart,
+    // revealing the news screen underneath. Holds for 2 seconds before transitioning.
+    function burstIntoCategory(name, emoji, displayName) {
+      const overlay = document.createElement("div");
+      overlay.className = "burst-overlay";
+      overlay.innerHTML = `
+    <div class="burst-text serif">
+      <div class="burst-line-1">${emoji} You chose "${displayName}"</div>
+      <div class="burst-line-2">Here are some latest news</div>
+    </div>`;
+      document.body.appendChild(overlay);
+
+      // trigger the fill-the-screen animation
+      requestAnimationFrame(() => overlay.classList.add("burst-grow"));
+
+      // hold for 2 seconds, then burst apart + reveal the news screen
+      setTimeout(() => {
+        overlay.classList.add("burst-explode");
+        openCategory(name, emoji, displayName);
+      }, 2000);
+
+      // clean up the overlay after it finishes exploding
+      setTimeout(() => overlay.remove(), 2600);
+    }
 
     async function openCategory(name, emoji, displayName) {
       document.getElementById("heroView").classList.add("hidden");
@@ -547,10 +733,7 @@
       document.getElementById("catEmoji").textContent = emoji;
       document.getElementById("catName").textContent = displayName || name;
       window.scrollTo(0, 0);
-
-      const theme = name ? (CATEGORY_THEMES[name] || CATEGORY_THEMES["World"])
-        : "linear-gradient(160deg,#060912,#0b1330,#1a2550)";
-      document.getElementById("catBgLayer").style.background = theme;
+      // background is the same hero photo, just blurred + dimmed — set via CSS, no JS needed here
 
       const content = document.getElementById("content");
       content.innerHTML = '<div class="status">Fetching and summarizing news…</div>';
@@ -605,6 +788,15 @@
 
     document.getElementById("nameInput").addEventListener("input", tickClock);
     loadCategories();
+
+    // Sparkle cursor follow
+    const cursorEl = document.getElementById("sparkleCursor");
+    document.addEventListener("mousemove", (e) => {
+      cursorEl.style.left = e.clientX + "px";
+      cursorEl.style.top = e.clientY + "px";
+    });
+    document.addEventListener("mousedown", () => cursorEl.classList.add("clicking"));
+    document.addEventListener("mouseup", () => cursorEl.classList.remove("clicking"));
   </script>
 </body>
 
