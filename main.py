@@ -80,11 +80,9 @@ app = FastAPI(title="AI News Intelligence Hub")
 
 app.add_middleware(
     CORSMiddleware,
-   
     allow_origins=["https://sparkling-mousse-4031a2.netlify.app"],
-    allow_methods=["https://sparkling-mousse-4031a2.netlify.app"],
-    allow_headers=["https://sparkling-mousse-4031a2.netlify.app"],
-    
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Every topic pill the frontend can show. Add more here any time —
