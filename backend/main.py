@@ -80,7 +80,7 @@ app = FastAPI(title="AI News Intelligence Hub")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://sparkling-mousse-4031a2.netlify.app"],
+    allow_origins=["https://sagnova.netlify.app"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
