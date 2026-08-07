@@ -588,6 +588,322 @@
     }
   </style>
 </head>
+<!-- ============================================================
+     SAGS NEWS — "MIND BLOWING" ENHANCEMENT PACK
+     Paste this entire block right before </body> in index.html
+     ============================================================ -->
+
+<style>
+  /* ---------- 1. Animated aurora mesh overlay on hero ---------- */
+  #heroView {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aurora-layer {
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(217, 185, 104, 0.25), transparent 35%),
+      radial-gradient(circle at 80% 30%, rgba(124, 158, 255, 0.2), transparent 35%),
+      radial-gradient(circle at 50% 80%, rgba(255, 124, 158, 0.18), transparent 35%);
+    filter: blur(60px);
+    animation: auroraDrift 18s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+  }
+
+  @keyframes auroraDrift {
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(-3%, 2%) scale(1.15) rotate(8deg);
+    }
+
+    100% {
+      transform: translate(2%, -3%) scale(1.05) rotate(-6deg);
+    }
+  }
+
+  /* ---------- 2. Particle canvas (floating embers/sparkles) ---------- */
+  #particleCanvas {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* ---------- 3. Magnetic glowing cursor orb (desktop only) ---------- */
+  #magicCursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(217, 185, 104, 0.9), rgba(217, 185, 104, 0) 70%);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+    mix-blend-mode: screen;
+  }
+
+  #magicCursor.hovering {
+    width: 60px;
+    height: 60px;
+  }
+
+  @media (hover: none) {
+    #magicCursor {
+      display: none;
+    }
+  }
+
+  /* ---------- 4. Glitch/scramble entrance for the greeting ---------- */
+  .greet-title.glitch-in {
+    animation: glitchReveal 1.1s steps(2, end) both;
+  }
+
+  @keyframes glitchReveal {
+    0% {
+      opacity: 0;
+      transform: translateX(-6px);
+      filter: blur(6px) hue-rotate(0deg);
+    }
+
+    15% {
+      opacity: 1;
+      transform: translateX(4px);
+      filter: blur(2px) hue-rotate(40deg);
+    }
+
+    30% {
+      transform: translateX(-3px);
+      filter: blur(3px) hue-rotate(-30deg);
+    }
+
+    45% {
+      transform: translateX(2px);
+      filter: blur(1px) hue-rotate(20deg);
+    }
+
+    60% {
+      transform: translateX(-1px);
+      filter: blur(0.5px) hue-rotate(-10deg);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+      filter: blur(0) hue-rotate(0deg);
+    }
+  }
+
+  /* ---------- 5. Shifting rainbow-gold text shimmer on hover ---------- */
+  .greet-title:hover {
+    background-size: 200% auto;
+    animation: shimmerText 3s linear infinite;
+  }
+
+  @keyframes shimmerText {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  /* ---------- 6. Card entrance: staggered 3D flip-in ---------- */
+  .grid .card {
+    opacity: 0;
+    animation: cardFlyIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes cardFlyIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px) rotateX(-15deg) scale(0.92);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) rotateX(0) scale(1);
+    }
+  }
+
+  /* ---------- 7. Pulsing glow ring around topic panel ---------- */
+  @keyframes ringPulse {
+
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(217, 185, 104, 0.0);
+    }
+
+    50% {
+      box-shadow: 0 0 40px 6px rgba(217, 185, 104, 0.15);
+    }
+  }
+
+  .topic-panel {
+    animation: ringPulse 5s ease-in-out infinite;
+    border-radius: 24px;
+  }
+
+  /* ---------- 8. Screen-flash + shockwave ring on burst click ---------- */
+  .shockwave {
+    position: fixed;
+    z-index: 998;
+    pointer-events: none;
+    border: 2px solid rgba(217, 185, 104, 0.8);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
+    animation: shockwaveExpand 0.9s ease-out forwards;
+  }
+
+  @keyframes shockwaveExpand {
+    to {
+      width: 2000px;
+      height: 2000px;
+      opacity: 0;
+      border-width: 0.5px;
+    }
+  }
+</style>
+
+<canvas id="particleCanvas"></canvas>
+<div id="magicCursor"></div>
+
+<script>
+  (function () {
+    /* ---------- Inject aurora layer into hero if not already present ---------- */
+    const hero = document.getElementById("heroView");
+    if (hero && !hero.querySelector(".aurora-layer")) {
+      const aurora = document.createElement("div");
+      aurora.className = "aurora-layer";
+      hero.insertBefore(aurora, hero.firstChild);
+    }
+
+    /* ---------- Glitch-in the greeting once on load ---------- */
+    const greetEl = document.getElementById("greeting");
+    if (greetEl) greetEl.classList.add("glitch-in");
+
+    /* ---------- Particle system: soft floating embers ---------- */
+    const canvas = document.getElementById("particleCanvas");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+    const PARTICLE_COUNT = window.innerWidth < 700 ? 30 : 70;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function spawnParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + 20,
+        r: Math.random() * 2.2 + 0.6,
+        speed: Math.random() * 0.6 + 0.15,
+        drift: (Math.random() - 0.5) * 0.4,
+        hue: Math.random() > 0.5 ? "217,185,104" : "124,158,255",
+        alpha: Math.random() * 0.5 + 0.2,
+        twinkle: Math.random() * 0.02 + 0.005,
+      };
+    }
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const p = spawnParticle();
+      p.y = Math.random() * canvas.height; // spread initial positions
+      particles.push(p);
+    }
+
+    function tick() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p) => {
+        p.y -= p.speed;
+        p.x += p.drift;
+        p.alpha += (Math.random() - 0.5) * p.twinkle;
+        p.alpha = Math.max(0.1, Math.min(0.8, p.alpha));
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.hue},${p.alpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = `rgba(${p.hue},0.8)`;
+        ctx.fill();
+
+        if (p.y < -20) Object.assign(p, spawnParticle());
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    /* ---------- Magnetic glowing cursor ---------- */
+    const cursor = document.getElementById("magicCursor");
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+    window.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+    function animateCursor() {
+      curX += (mouseX - curX) * 0.18;
+      curY += (mouseY - curY) * 0.18;
+      cursor.style.left = curX + "px";
+      cursor.style.top = curY + "px";
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.addEventListener("mouseover", (e) => {
+      if (e.target.closest("a, button, .topic-btn, .card")) {
+        cursor.classList.add("hovering");
+      }
+    });
+    document.addEventListener("mouseout", (e) => {
+      if (e.target.closest("a, button, .topic-btn, .card")) {
+        cursor.classList.remove("hovering");
+      }
+    });
+
+    /* ---------- 3D parallax tilt on hero photo based on mouse position ---------- */
+    if (hero) {
+      document.addEventListener("mousemove", (e) => {
+        const xPct = (e.clientX / window.innerWidth - 0.5) * 2;
+        const yPct = (e.clientY / window.innerHeight - 0.5) * 2;
+        hero.style.backgroundPosition = `${50 + xPct * 4}% ${50 + yPct * 4}%`;
+      });
+    }
+
+    /* ---------- Shockwave ring + screen flash on any topic click ---------- */
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".topic-btn") || e.target.closest(".all-btn")) {
+        const wave = document.createElement("div");
+        wave.className = "shockwave";
+        document.body.appendChild(wave);
+        setTimeout(() => wave.remove(), 900);
+      }
+    });
+
+    /* ---------- Stagger the story card entrance animation ---------- */
+    const staggerCards = () => {
+      document.querySelectorAll(".grid .card").forEach((card, i) => {
+        card.style.animationDelay = `${i * 0.06}s`;
+      });
+    };
+    // Run once now, and again every time new cards get rendered
+    staggerCards();
+    const observer = new MutationObserver(staggerCards);
+    const content = document.getElementById("content");
+    if (content) observer.observe(content, { childList: true, subtree: true });
+  })();
+</script>
 
 <body>
 
