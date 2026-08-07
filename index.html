@@ -904,6 +904,274 @@
     if (content) observer.observe(content, { childList: true, subtree: true });
   })();
 </script>
+<!-- ============================================================
+     SAGS NEWS — ENHANCEMENT PACK 2: CINEMATIC POLISH
+     Paste this entire block right before </body>,
+     AFTER the first enhancement pack you already added.
+     ============================================================ -->
+
+<style>
+  /* ---------- 1. Cinematic loading curtain on page load ---------- */
+  #loadCurtain {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #060912;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  #loadCurtain.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #loadCurtain .curtain-left,
+  #loadCurtain .curtain-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background: linear-gradient(135deg, #0a0b0f, #14161d);
+    transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+  }
+
+  #loadCurtain .curtain-left {
+    left: 0;
+  }
+
+  #loadCurtain .curtain-right {
+    right: 0;
+  }
+
+  #loadCurtain.hide .curtain-left {
+    transform: translateX(-100%);
+  }
+
+  #loadCurtain.hide .curtain-right {
+    transform: translateX(100%);
+  }
+
+  #loadCurtain .curtain-logo {
+    position: relative;
+    z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #f4f2ee;
+    letter-spacing: 0.05em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #loadCurtain .curtain-logo span.accent {
+    color: #d9b968;
+  }
+
+  .curtain-spinner {
+    width: 34px;
+    height: 34px;
+    border: 2px solid rgba(217, 185, 104, 0.25);
+    border-top-color: #d9b968;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ---------- 2. Film grain overlay for a premium filmic texture ---------- */
+  #grainOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- 3. Holographic sheen sweep on card hover ---------- */
+  .grid .card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .grid .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(115deg,
+        transparent 0%, rgba(255, 255, 255, 0.0) 35%,
+        rgba(217, 185, 104, 0.18) 50%,
+        rgba(124, 158, 255, 0.12) 60%,
+        transparent 100%);
+    transform: skewX(-20deg);
+    transition: left 0.7s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .grid .card:hover::before {
+    left: 150%;
+  }
+
+  /* ---------- 4. Scroll-reveal for cards (fade+rise as they enter view) ---------- */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- 5. Refined custom scrollbar, page-wide ---------- */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0b0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d9b968, #7c9eff);
+    border-radius: 10px;
+    border: 2px solid #0a0b0f;
+  }
+
+  /* ---------- 6. Animated gradient underline beneath the section heading ---------- */
+  .cat-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+
+  .cat-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #d9b968, #7c9eff, transparent);
+    background-size: 200% auto;
+    animation: underlineFlow 3s linear infinite;
+  }
+
+  @keyframes underlineFlow {
+    to {
+      background-position: -200% center;
+    }
+  }
+
+  /* ---------- 7. Breathing ambient glow behind the hero photo ---------- */
+  #heroView::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(217, 185, 104, 0.08), transparent 70%);
+    animation: breathe 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes breathe {
+
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* ---------- 8. Topic pills: staggered slide-in from the right on load ---------- */
+  .topic-btn {
+    opacity: 0;
+    animation: pillSlideIn 0.5s ease forwards;
+  }
+
+  @keyframes pillSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style>
+
+<div id="loadCurtain">
+  <div class="curtain-left"></div>
+  <div class="curtain-right"></div>
+  <div class="curtain-logo">
+    <div class="curtain-spinner"></div>
+    <div>SAGS <span class="accent">NEWS</span></div>
+  </div>
+</div>
+<div id="grainOverlay"></div>
+
+<script>
+  (function () {
+    /* ---------- Hide the loading curtain once everything is ready ---------- */
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loadCurtain").classList.add("hide");
+      }, 500);
+    });
+
+    /* ---------- Stagger topic pill entrance animation ---------- */
+    function staggerPills() {
+      document.querySelectorAll(".topic-btn").forEach((btn, i) => {
+        btn.style.animationDelay = `${i * 0.04}s`;
+      });
+    }
+    staggerPills();
+    const pillGrid = document.getElementById("topicGrid");
+    if (pillGrid) new MutationObserver(staggerPills).observe(pillGrid, { childList: true });
+
+    /* ---------- Scroll-reveal cards using IntersectionObserver ---------- */
+    function attachScrollReveal() {
+      const cards = document.querySelectorAll(".grid .card:not(.scroll-reveal)");
+      cards.forEach((card) => card.classList.add("scroll-reveal"));
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      cards.forEach((card) => io.observe(card));
+    }
+    attachScrollReveal();
+    const contentEl = document.getElementById("content");
+    if (contentEl) new MutationObserver(attachScrollReveal).observe(contentEl, { childList: true, subtree: true });
+  })();
+</script>
 
 <body>
 
