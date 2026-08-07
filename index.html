@@ -1172,6 +1172,298 @@
     if (contentEl) new MutationObserver(attachScrollReveal).observe(contentEl, { childList: true, subtree: true });
   })();
 </script>
+<!-- ============================================================
+     SAGS NEWS — ENHANCEMENT PACK 3: "2080" CINEMATIC LAYER
+     Paste this entire block right before </body>,
+     AFTER enhancement packs 1 and 2.
+     ============================================================ -->
+
+<style>
+  /* ---------- 1. Full-viewport liquid gradient field (canvas, WebGPU-style feel) ---------- */
+  #liquidField {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+
+  /* ---------- 2. CRT-style scanlines for a synthetic, futuristic surface ---------- */
+  #scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: repeating-linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.025) 0px,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 3px);
+    opacity: 0.4;
+  }
+
+  #vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+  }
+
+  /* ---------- 3. Kinetic decode/scramble typing effect ---------- */
+  .decode-text {
+    display: inline-block;
+  }
+
+  .decode-char {
+    display: inline-block;
+  }
+
+  /* ---------- 4. Depth-parallax layered chrome frame (corner brackets, HUD feel) ---------- */
+  .hud-corner {
+    position: fixed;
+    width: 46px;
+    height: 46px;
+    z-index: 20;
+    pointer-events: none;
+    border-color: rgba(217, 185, 104, 0.55);
+    opacity: 0;
+    animation: hudFadeIn 1.2s ease 1.6s forwards;
+  }
+
+  @keyframes hudFadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hud-tl {
+    top: 18px;
+    left: 18px;
+    border-top: 1.5px solid;
+    border-left: 1.5px solid;
+  }
+
+  .hud-tr {
+    top: 18px;
+    right: 18px;
+    border-top: 1.5px solid;
+    border-right: 1.5px solid;
+  }
+
+  .hud-bl {
+    bottom: 18px;
+    left: 18px;
+    border-bottom: 1.5px solid;
+    border-left: 1.5px solid;
+  }
+
+  .hud-br {
+    bottom: 18px;
+    right: 18px;
+    border-bottom: 1.5px solid;
+    border-right: 1.5px solid;
+  }
+
+  .hud-label {
+    position: fixed;
+    top: 26px;
+    left: 74px;
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: rgba(217, 185, 104, 0.6);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: hudFadeIn 1.2s ease 1.9s forwards;
+  }
+
+  .hud-status {
+    position: fixed;
+    top: 26px;
+    right: 74px;
+    z-index: 20;
+    pointer-events: none;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: rgba(124, 158, 255, 0.6);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: hudFadeIn 1.2s ease 2.1s forwards;
+  }
+
+  .hud-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7c9eff;
+    box-shadow: 0 0 8px 2px rgba(124, 158, 255, 0.8);
+    animation: dotPulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes dotPulse {
+
+    0%,
+    100% {
+      opacity: 0.4;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* ---------- 5. Depth-parallax layers for the hero content itself ---------- */
+  .top-row,
+  .bottom-row {
+    will-change: transform;
+    transition: transform 0.15s ease-out;
+  }
+
+  /* ---------- 6. Chromatic-aberration edge flicker on card hover (cyberpunk glass) ---------- */
+  .grid .card {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, filter 0.2s ease;
+  }
+
+  .grid .card:hover {
+    filter: drop-shadow(1px 0 0 rgba(255, 80, 80, 0.25)) drop-shadow(-1px 0 0 rgba(80, 180, 255, 0.25));
+  }
+
+  /* ---------- 7. Data-stream vertical lines drifting in the background ---------- */
+  .data-stream {
+    position: fixed;
+    top: -10%;
+    width: 1px;
+    height: 30%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(217, 185, 104, 0.5), transparent);
+    animation: streamFall linear infinite;
+  }
+
+  @keyframes streamFall {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(1000%);
+    }
+  }
+</style>
+
+<canvas id="liquidField"></canvas>
+<div id="scanlines"></div>
+<div id="vignette"></div>
+<div class="hud-corner hud-tl"></div>
+<div class="hud-corner hud-tr"></div>
+<div class="hud-corner hud-bl"></div>
+<div class="hud-corner hud-br"></div>
+<div class="hud-label">SYSTEM // SAGS.NEWS</div>
+<div class="hud-status"><span class="hud-dot"></span> LIVE FEED ACTIVE</div>
+
+<script>
+  (function () {
+    /* ---------- Liquid gradient field: layered sine-wave "fluid" simulation ---------- */
+    const canvas = document.getElementById("liquidField");
+    const ctx = canvas.getContext("2d");
+    let W, H, t = 0;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    window.addEventListener("resize", resize);
+    resize();
+
+    const blobs = [
+      { cx: 0.25, cy: 0.3, r: 0.35, hue: "217,185,104", speed: 0.4 },
+      { cx: 0.75, cy: 0.25, r: 0.3, hue: "124,158,255", speed: 0.3 },
+      { cx: 0.5, cy: 0.75, r: 0.4, hue: "255,124,158", speed: 0.25 },
+    ];
+
+    function drawLiquid() {
+      ctx.clearRect(0, 0, W, H);
+      blobs.forEach((b, i) => {
+        const x = W * (b.cx + Math.sin(t * b.speed + i * 2) * 0.08);
+        const y = H * (b.cy + Math.cos(t * b.speed * 0.8 + i) * 0.08);
+        const r = Math.min(W, H) * (b.r + Math.sin(t * 0.5 + i) * 0.04);
+        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+        grad.addColorStop(0, `rgba(${b.hue},0.35)`);
+        grad.addColorStop(1, `rgba(${b.hue},0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      t += 0.006;
+      requestAnimationFrame(drawLiquid);
+    }
+    drawLiquid();
+
+    /* ---------- Kinetic decode/scramble text effect ---------- */
+    const SCRAMBLE_CHARS = "アイウエオカキクケコサシスセソ0123456789#%&+*";
+    function decodeText(el) {
+      if (!el || el.dataset.decoded) return;
+      el.dataset.decoded = "true";
+      const finalText = el.textContent;
+      const chars = finalText.split("");
+      el.innerHTML = chars
+        .map((c) => (c === " " ? " " : `<span class="decode-char">${c}</span>`))
+        .join("");
+      const spans = el.querySelectorAll(".decode-char");
+      spans.forEach((span, i) => {
+        const original = span.textContent;
+        let frame = 0;
+        const totalFrames = 10 + Math.random() * 6;
+        const delay = i * 28;
+        setTimeout(() => {
+          const iv = setInterval(() => {
+            frame++;
+            if (frame >= totalFrames) {
+              span.textContent = original;
+              clearInterval(iv);
+            } else {
+              span.textContent = SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+            }
+          }, 35);
+        }, delay);
+      });
+    }
+    // Apply to the greeting once the page is ready
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        const greetEl = document.getElementById("greeting");
+        if (greetEl) decodeText(greetEl);
+      }, 900);
+    });
+
+    /* ---------- Depth-parallax on scroll/mouse for hero content layers ---------- */
+    document.addEventListener("mousemove", (e) => {
+      const xPct = (e.clientX / window.innerWidth - 0.5);
+      const yPct = (e.clientY / window.innerHeight - 0.5);
+      const topRow = document.querySelector(".top-row");
+      const bottomRow = document.querySelector(".bottom-row");
+      if (topRow) topRow.style.transform = `translate(${xPct * -8}px, ${yPct * -6}px)`;
+      if (bottomRow) bottomRow.style.transform = `translate(${xPct * -4}px, ${yPct * -3}px)`;
+    });
+
+    /* ---------- Ambient falling data-stream lines ---------- */
+    function spawnStream() {
+      const el = document.createElement("div");
+      el.className = "data-stream";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = 4 + Math.random() * 6 + "s";
+      el.style.opacity = Math.random() * 0.5 + 0.2;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 10000);
+    }
+    setInterval(spawnStream, 900);
+  })();
+</script>
 
 <body>
 
