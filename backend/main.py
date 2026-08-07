@@ -1,11 +1,3 @@
-"""
-AI News Intelligence Hub — Backend (v2, Gemini)
---------------------------------------------------
-Fetches raw news from GNews, deduplicates near-identical stories,
-then asks Gemini to summarize, categorize, score, and link each one.
-
-Run with:  uvicorn main:app --reload --port 8001
-"""
 
 import os
 import json
