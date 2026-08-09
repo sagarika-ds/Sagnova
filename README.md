@@ -21,3 +21,7 @@ Backend Hosting	Render (free tier)
 Frontend Hosting	Netlify (free tier)
 Version Control	Git + GitHub
 
+
+
+📄 License
+Personal project — all rights reserved.
