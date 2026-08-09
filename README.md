@@ -9,3 +9,15 @@ Smart deduplication — near-identical stories from different publishers are mer
 Time-based caching — results are cached for 3 hours per category to protect free-tier API limits
 Real source links — every card links to the original article; AI never invents URLs, only picks from real fetched articles
 Cinematic UI — hero landing page with a personal photo background, live clock, glassmorphic floating topic list, and a game-style "burst" transition into each topic page
+
+🧰 Tech Stack
+Layer	Technology
+Backend	Python 3.11, FastAPI, Uvicorn
+AI	Google Gemini (gemini-flash-lite-latest)
+News Source	GNews API
+Frontend	Vanilla HTML, CSS, JavaScript (no framework, no build step)
+Fonts	Playfair Display, Space Grotesk (Google Fonts)
+Backend Hosting	Render (free tier)
+Frontend Hosting	Netlify (free tier)
+Version Control	Git + GitHub
+
