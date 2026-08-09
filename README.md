@@ -16,7 +16,7 @@ User clicks a topic
         │
         ▼
 Frontend (Netlify) sends a request to:
-https://sagnova.onrender.com/briefing?categories=K-Pop
+https://sagnova.onrender.com/briefing?categories=name
         │
         ▼
 Backend (Render) checks cache.json
