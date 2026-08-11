@@ -66,17 +66,17 @@ Sagnova/                        (GitHub repo root)
     
 🧰 Tech Stack
 
-Layer	Technology
-Backend	Python 3.11, FastAPI, Uvicorn
-AI	Google Gemini (gemini-flash-lite-latest)
-News Source	GNews API
-Frontend	Vanilla HTML, CSS, JavaScript (no framework, no build step)
-Fonts	Playfair Display, Space Grotesk (Google Fonts)
-Backend Hosting	Render (free tier)
+Layer	                Technology
+Backend	                Python 3.11, FastAPI, Uvicorn
+AI	                Google Gemini (gemini-flash-lite-latest)
+News Source	        GNews API
+Frontend	        Vanilla HTML, CSS, JavaScript (no framework, no build step)
+Fonts	                Playfair Display, Space Grotesk (Google Fonts)
+Backend Hosting	        Render (free tier)
 Frontend Hosting	Netlify (free tier)
-Version Control	Git + GitHub
+Version Control	        Git + GitHub
 
 
 📄 License
 
-Personal project — all rights reserved.
+Personal project - all rights reserved.
