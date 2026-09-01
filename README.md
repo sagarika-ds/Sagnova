@@ -1,8 +1,8 @@
-Sagnova
+Sagnova 
 
 AI-powered, personalized news briefing app — pulls live news across 20+ categories, deduplicates similar stories, and uses Google Gemini to summarize, score, and explain why each story matters.
 
-✨ Features
+Features:
 
 20+ live topic categories: AI, Tech, Finance, World, India, Sports, Entertainment, Science, Space, Health, Cybersecurity, Startups, Programming, K-Pop, Music, Dance, Pop Culture, Awards Shows, Travel, Mountains, Beaches
 AI-generated summaries: every story gets a 2-3 line summary, a "why it matters" line, and a 5-dimension relevance score (importance, India impact, career relevance, financial impact, AI relevance)
@@ -11,7 +11,7 @@ Time-based caching: results are cached for 3 hours per category to protect free-
 Real source links: every card links to the original article; AI never invents URLs, only picks from real fetched articles
 Cinematic UI: hero landing page with a personal photo background, live clock, glassmorphic floating topic list, and a game-style "burst" transition into each topic page
 
-How the Project Actually Runs (Data Flow)
+How the Project Actually Runs (Data Flow):
 
 User clicks a topic 
         │
@@ -43,7 +43,7 @@ Frontend renders story cards with the
 themed background + burst animation
 
 
-Project Folder Structure
+Project Folder Structure:
 
 Sagnova/                        (GitHub repo root)
 │
@@ -64,7 +64,7 @@ Sagnova/                        (GitHub repo root)
     └── cache.json              ← auto-generated at runtime (gitignored)
 
     
-🧰 Tech Stack
+🧰 Tech Stack:
 
 Layer	                Technology
 Backend	                Python 3.11, FastAPI, Uvicorn
